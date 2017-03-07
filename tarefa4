@@ -1,0 +1,84 @@
+#include <iostream>
+
+using namespace std;
+
+int jogadores[23];
+float porcentagem[23];
+
+float CalculaPorcentagem(int x, float y)
+{
+    float resultado;
+    resultado = (x/y)*100;
+    return resultado;
+}
+
+int main()
+{
+    int voto;
+    //Loop para votar----------------------------------------------------------------------
+    cout << "Enquete: Quem foi o melhor jogador?";
+    while(1)
+    {
+        cout << "Número do jogador (0=fim): ";
+        cin >> voto;
+        if(voto == 0)
+        {
+            break;
+        }
+        if((voto<0)||(voto>23))
+        {
+            cout << "\nNumero inválido, escolha outro:";
+        }else{
+                jogadores[voto-1]++;
+             }
+    }
+    //-------------------------------------------------------------------------------------------------------
+    //Loop para somar os votos---------------------------------------------------------------------------------
+    int i;
+    float soma;
+    for(i=0; i<23; i++)
+    {
+        soma=soma+jogadores[i];
+    }
+    //--------------------------------------------------------------------------------------------------------
+    //Chama função da porcentagem------------------------------------------------------------------------
+    int j;
+    for(j=0; j<23; j++)
+    {
+        porcentagem[j] = CalculaPorcentagem(jogadores[j] , soma);
+    }
+    //-------------------------------------------------------------------------------------------------
+    //Procura melhor jogador----------------------------------------------------------------------------
+    int melhorjogador = 0;
+    int controle = 0;
+    int m;
+    for(m=0; m<23; m++)
+    {
+       if(jogadores[m]>controle)
+       {
+            melhorjogador = m;
+            controle = jogadores[m];
+       }
+    }
+    //----------------------------------------------------------------------------------------------------------
+    //Imprime resultados em tela --------------------------------------------------------------------------
+    cout << "\nResultado da votação:\n";
+    cout << "O total de votos computados foi: " << soma;
+    cout << "\nJogador----------Votos-----------porcentagem";
+    int k;
+    for(k=0; k<23; k++)
+    {
+        if((jogadores[k] != 0)&&(k < 9))
+        {
+            cout << "\n   0" << k+1 << "             " << jogadores[k] << "                " << porcentagem[k];
+        }
+        if((jogadores[k] != 0)&&(k >= 9))
+        {
+            cout << "\n   " << k+1 << "             " << jogadores[k] << "                " << porcentagem[k];
+        }
+    }
+    cout << "\nO melhor jogador foi o número " << melhorjogador+1 << ", com " << jogadores[melhorjogador] << " votos, correspondendo a " << porcentagem[melhorjogador] << "% do total de votos.";
+
+
+    return 0;
+}
